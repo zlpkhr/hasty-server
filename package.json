@@ -12,7 +12,8 @@
   },
   "scripts": {
     "format": "prettier -w .",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "jest"
   },
   "keywords": [
     "http",
