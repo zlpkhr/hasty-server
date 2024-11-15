@@ -10,27 +10,29 @@ Hasty Server allows you to quickly set up a web server. Below is a simple exampl
 
 Example
 
- Import Hasty Server
-```js 
-const Hasty = require('hasty-server');
+Import Hasty Server
+
+```js
+const Hasty = require("hasty-server");
 ```
+
 ```js title="Create a new Hasty server instance"
 const server = new Hasty();
 ```
 
 ```js title="Define a route for GET requests to the root URL"
-server.get('/', (req, res) => {
-  console.log('GET /');
-  res.send('Hello, World!');
+server.get("/", (req, res) => {
+  console.log("GET /");
+  res.send("Hello, World!");
 });
 ```
 
 ```js title="Start the server and listen on port 8080"
 server.listen(8080, () => {
-  console.log('Server listening on port 8080');
+  console.log("Server listening on port 8080");
 });
 ```
-        
+
 The code above sets up a basic server using the Hasty framework. When a `GET` request is made to the root (`/`) URL, it logs the request to the console and responds with "Hello, World!".
 
 Running the Server

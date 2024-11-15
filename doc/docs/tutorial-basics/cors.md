@@ -11,13 +11,13 @@ Cross-Origin Resource Sharing (CORS) is a mechanism that allows resources on a w
 for example, if you have a website hosted on `https://example.com` and you want to make a request to an API hosted on `https://api.example.com`, the browser will block the request by default due to the same-origin policy. CORS allows you to configure the server to allow requests from specific domains.
 
 ### Enabling CORS in Hasty server
- 
+
 To enable CORS in a Hasty server, you can use the `cors` middleware provided by the `hasty-server` package. The `cors` middleware allows you to configure the server to allow requests from specific domains.
 
 To use the `cors` middleware, you need to install the `hasty-server` package:
 
 ```js title="Enable CORS in Hasty server"
-const Hasty = require('hasty-server');
+const Hasty = require("hasty-server");
 const server = new Hasty();
 server.cors(true);
 ```
