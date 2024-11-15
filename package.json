@@ -6,7 +6,9 @@
     "lib": "lib",
     "test": "test"
   },
-  "scripts": {},
+  "scripts": {
+    "format": "prettier -w ."
+  },
   "keywords": [
     "http",
     "server",
