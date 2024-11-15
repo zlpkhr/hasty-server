@@ -1,103 +1,86 @@
-# Hasty
+## Prerequisites
 
-![NPM Version](https://img.shields.io/npm/v/hasty-server)
-![NPM Downloads](https://img.shields.io/npm/d18m/hasty-server)
-![NPM License](https://img.shields.io/npm/l/hasty-server)
+Before getting started, ensure you have the following installed:
 
-Hasty server is a simple web framework to build webserver in a simple way. It is inspired by [Express.js](https://expressjs.com/).
-Bascially, It is my implementation of HTTP using raw TCP Socket in Javascript.
+- Node.js (>= 20.0.0)
+- npm (comes with Node.js)
 
-### table of contents
+## Project Structure
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Request Object](#request-object)
-- [Contributing](#contributing)
-- [CHANGELOG](CHANGELOG.md)
-- [LICENSE](LICENSE.md)
+```
+hasty-server/
+├── lib/                # Core library files
+├── server/            # Server implementation
+├── test/              # Test suite
+└── doc/               # Documentation website
+```
 
-### Note
+## Building the Project
 
-This is a work in progress and not ready for production. It is just a fun project to learn how HTTP works under the hood.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/zlpkhr/hasty-server.git
+   cd hasty-server
+   ```
 
-### Installation
+2. Install dependencies for all workspaces:
+   ```bash
+   npm install
+   ```
+
+3. Run TypeScript type checking:
+   ```bash
+   npm run lint
+   ```
+
+4. Format the code (optional):
+   ```bash
+   npm run format
+   ```
+
+## Testing
+
+The project uses Jest for testing. To run the test suite:
 
 ```bash
-npm install hasty-server
+npm run -w test test
 ```
 
-### Usage
+This will run all tests and show the coverage report.
 
-**Common JS**
+## Documentation Website
 
-```Javascript
-const Hasty = require('hasty-server');
-const  server = new  Hasty();
+The documentation is built using Docusaurus. To work with the documentation:
 
-server.get('/', (req, res) => {
-    res.send('Hello World');
-});
+1. Start the development server:
+   ```bash
+   npm run -w doc start
+   ```
 
-server.listen(8080, () => {
-    console.log('Server is running on port 8080');
-});
-```
+2. Build the documentation for production:
+   ```bash
+   npm run -w doc build
+   ```
 
-**ES6**
+3. Serve the built documentation:
+   ```bash
+   npm run -w doc serve
+   ```
 
-```Javascript
-import Hasty from 'hasty-server';
-const  server = new  Hasty();
+4. Clear the build directory:
+   ```bash
+   npm run -w doc clear
+   ```
 
-server.get('/', (req, res) => {
-    res.send('Hello World');
-});
+5. Generate translations:
+   ```bash
+   npm run -w doc write-translations
+   ```
 
-server.listen(8080, () => {
-    console.log('Server is running on port 8080');
-});
-```
+## Development Workflow
 
-### Request Object
-
-Some of the features in `response object` are:
-
-- `send` : Send a response to the client.
-
-  - Usage: `res.send('Hello World')`
-
-- `json` : Send a JSON response to the client.
-
-  - Usage: `res.json({message: 'Hello World'})`
-
-- `status` : Set the status code of the response.
-  - Usage: `res.status(200)`
-  - Default status code is 200.
-
-### Contributing
-
-If you would like to contribute to Hasty Server, you're welcome to:
-
-- Fork the repository.
-- Create a branch for your feature or bugfix.
-- Submit a pull request.
-- Please make sure to read the [contribution guidelines](CONTRIBUTING.md) for more details.
-
-Note: Do not use third-party code or dependencies. You can take help from language models, but avoid directly copying any of their code.
-
-### CHANGELOG
-
-- v0.8.0
-  - Added `download()` method to send file as an attachment.
-  - Added `server.cors(true)` to enable `cors`.
-
-For more information, see .
-[CHANGELOG](CHANGELOG.md)
-
-### LICENSE
-
-This project is licensed under GOFL (Global Opensource softwares Free License) and GPL-v3 (General Public License) - see the [LICENSE](LICENSE.md) and [GPL-v3](GPLV3.md)file for details.
-
-```
-All rights reserved to the author.
-```
+1. Make your changes in the relevant files
+2. Run TypeScript type checking: `npm run lint`
+3. Format code: `npm run format`
+4. Run tests: `npm run -w test test`
+5. Build documentation (if needed): `npm run -w doc build`
