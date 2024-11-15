@@ -2,6 +2,10 @@
   "name": "hasty-server",
   "version": "0.8.0",
   "main": "./server/index.js",
+  "workspaces": [
+    "doc",
+    "test"
+  ],
   "directories": {
     "lib": "lib",
     "test": "test"
