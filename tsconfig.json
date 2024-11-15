@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
-    "types": ["node","jest"],
+    "types": ["node", "jest"],
     "strict": true,
     "allowJs": true,
     "checkJs": true,
@@ -15,19 +15,9 @@
     // We are not transpiling, so preserve our source code and do not emit files
     "module": "preserve",
     "noEmit": true,
-    "lib": [
-      "es2022"
-    ]
+    "lib": ["es2022"]
   },
   // Include the necessary files for your project
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "doc"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "exclude": ["node_modules", "doc"]
 }
