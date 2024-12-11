@@ -15,7 +15,7 @@
     "lint": "tsc --noEmit && eslint lint",
     "prepare": "husky",
     "lint-staged": "lint-staged",
-    "docs": "jsdoc -c jsdoc.json"
+    "docs": "jsdoc -c jsdoc.json -u tutorials"
   },
   "lint-staged": {
     "**/*": [
