@@ -1,25 +1,38 @@
 const { httpParser } = require("../lib/httpParser.js"); // Import the httpParser function from the httpParser.js file
 const net = require("net"); // Import the net module from Node.JS
 const Response = require("./response.js"); // Import the response object
-
-const { warn } = require("console");
+const logger = require("../lib/logger.js"); // Import the logger
 
 function getSocket(callback, context) {
   return net.createServer((Socket) => callback(Socket, context));
 }
 
 function handler(socket, context) {
+  logger.info("New connection established");
+
   socket.on("data", (data) => {
+    logger.debug("Received data from client: ", data.toString());
+
     const res = new Response(socket, context.enableCors); // Set up a new Response object with the socket and cors state
     const buff = data.toString(); // Convert buffer data to string
+
     httpParser(buff)
       .then((data) => {
+        logger.info(`Parsed HTTP request: ${data.method} ${data.path}`);
         pathController(data, context, res);
       })
       .catch((error) => {
-        console.error("Error parsing HTTP request:", error);
+        logger.error("Error parsing HTTP request:", error);
         res.sendStatus(400); // Send a Bad Request status
       });
+  });
+
+  socket.on("error", (error) => {
+    logger.error("Socket error:", error);
+  });
+
+  socket.on("end", () => {
+    logger.info("Connection closed");
   });
 }
 
@@ -27,19 +40,23 @@ function pathController(data, context, res) {
   const path = data.path;
   const method = data.method;
 
+  logger.debug(`Handling request: ${method} ${path}`);
+
   // Find the matching route, accounting for parameters
   const route = context.routes.find((route) => {
     return matchRouteWithParams(route.path, path) && route.method === method;
   });
 
   if (route) {
-    // Extract parameters from the matched route
     const params = extractParams(route.path, path);
-    // Log extracted params
+    logger.info(
+      `Matched route: ${method} ${route.path} with params: ${JSON.stringify(params)}`,
+    );
 
     data.params = params; // Attach extracted params to data
     route.callback(data, res); // Pass the updated data with params
   } else {
+    logger.warn(`Route not found: ${method} ${path}`);
     res.sendStatus(404); // Route not found
   }
 }
@@ -72,21 +89,6 @@ function extractParams(routePath, actualPath) {
   return params;
 }
 
-// function pathController(data,context, socket) {
-//    const path = data.path;
-//	const  method = data.method
-//    console.log("pathController: " + method + ": " + path);
-//
-//
-//
-//
-//    // Check if the path exists in the context.routes
-//    const route = context.routes.find(route => route.path === path && route.method === method);
-//    if (route) route.callback(data, socket);
-//	  else socket.sendStatus(404);
-// }
-//
-
 class Server {
   socket;
   constructor() {
@@ -95,12 +97,16 @@ class Server {
   }
 
   listen(PORT, callback) {
-    this.socket.listen(PORT, callback);
+    this.socket.listen(PORT, () => {
+      logger.info(`Server is listening on port ${PORT}`);
+      if (callback) callback();
+    });
   }
 
   close() {
-    this.socket.close();
-    warn("Server closed");
+    this.socket.close(() => {
+      logger.warn("Server closed");
+    });
   }
 }
 
@@ -108,20 +114,20 @@ class Hasty extends Server {
   constructor() {
     super();
     this.enableCors = false; // default to false
-    this.socket.on("data", () => this.handler());
   }
 
   setRoute(method, object) {
-    const route = new Object();
+    const route = {};
     route.callback = object.callback;
     route.path = object.path;
     route.method = method;
     this.routes.push(route);
+    logger.info(`Route added: ${method} ${object.path}`);
   }
 
-  //  Enable CORS
   cors(enable) {
     this.enableCors = enable;
+    logger.info(`CORS enabled: ${enable}`);
   }
 
   get(path, callback) {
@@ -154,15 +160,3 @@ class Hasty extends Server {
 }
 
 module.exports = Hasty;
-
-// const  routeHandler  = new RouteHandler()
-// routeHandler.get({callback:()=>{
-//	console.log("we are getting started")
-// },path:"/"})
-// routeHandler.setRoute("POST",{callback:()=>{},path:"/post"})
-// server.listen(8080,()=>{V
-//	console.log("server started");
-// })
-// routeHandler.listen(8080,()=>{
-// console.log("server started")
-// })
