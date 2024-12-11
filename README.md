@@ -1,93 +1,111 @@
-## Prerequisites
+Here’s the corrected README with the appropriate authorship and forking details:
 
-Before getting started, ensure you have the following installed:
+---
 
-- Node.js (>= 20.0.0)
-- npm (comes with Node.js)
+# Hasty Server
 
-## Project Structure
+**Hasty Server** is a blazing fast, lightweight HTTP server for Node.js, designed for developers who need performance and simplicity.
 
-```
-hasty-server/
-├── lib/                # Core library files
-├── server/            # Server implementation
-├── test/              # Test suite
-└── doc/               # Documentation website
-```
+---
 
-## Building the Project
+## Features
 
-1. Clone the repository:
+- High-performance HTTP server
+- Simple and intuitive API
+- TypeScript and JavaScript support
+- Built-in logging with [Pino](https://github.com/pinojs/pino)
+- Easily extensible and configurable
 
-   ```bash
-   git clone https://github.com/zlpkhr/hasty-server.git
-   cd hasty-server
-   ```
+---
 
-2. Install dependencies for all workspaces:
+## Installation
 
-   ```bash
-   npm install
-   ```
+Ensure you have the following prerequisites installed:
 
-3. Run TypeScript type checking:
+- **Node.js**: >= 20.0.0 (download from [nodejs.org](https://nodejs.org))
+- **npm**: Comes with Node.js
 
-   ```bash
-   npm run lint
-   ```
-
-4. Format the code (optional):
-   ```bash
-   npm run format
-   ```
-
-## Testing
-
-The project uses Jest for testing. To run the test suite:
+Clone the repository and install dependencies:
 
 ```bash
-npm run -w test test
+git clone https://github.com/zlpkhr/hasty-server.git
+cd hasty-server
+npm install
 ```
 
-This will run all tests and show the coverage report.
+---
 
-## Documentation Website
+## Usage
 
-The documentation is built using Docusaurus. To work with the documentation:
+Here's how to get started with Hasty Server:
 
-1. Start the development server:
+```javascript
+const HastyServer = require("./server");
+const server = new HastyServer();
 
-   ```bash
-   npm run -w doc start
-   ```
+server.listen(3000, () => {
+  console.log("Server is running on http://localhost:3000");
+});
+```
 
-2. Build the documentation for production:
+---
 
-   ```bash
-   npm run -w doc build
-   ```
+## Scripts
 
-3. Serve the built documentation:
+The project provides the following npm scripts:
 
-   ```bash
-   npm run -w doc serve
-   ```
+- **Lint**: `npm run lint`  
+  Runs TypeScript type checking and linting.
+- **Format**: `npm run format`  
+  Formats the codebase with Prettier.
+- **Test**: `npm run -w test test`  
+  Runs the Jest test suite.
 
-4. Clear the build directory:
+---
 
-   ```bash
-   npm run -w doc clear
-   ```
+## Documentation
 
-5. Generate translations:
-   ```bash
-   npm run -w doc write-translations
-   ```
+The documentation is built with [Docusaurus](https://docusaurus.io).
 
-## Development Workflow
+### Commands:
 
-1. Make your changes in the relevant files
-2. Run TypeScript type checking: `npm run lint`
-3. Format code: `npm run format`
-4. Run tests: `npm run -w test test`
-5. Build documentation (if needed): `npm run -w doc build`
+- **Start Dev Server**: `npm run -w doc start`
+- **Build Documentation**: `npm run -w doc build`
+- **Serve Documentation**: `npm run -w doc serve`
+
+Visit the live documentation site: [Hasty Server Docs](https://hasty-server.vercel.app)
+
+---
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes and ensure all tests pass.
+4. Submit a pull request.
+
+---
+
+## License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE.txt) file for details.
+
+---
+
+## Author
+
+Originally developed by **Akshat Kotpalliwar**, forked and maintained by **Azamat Zulpykhar**.
+
+Feel free to reach out or contribute to the project on [GitHub](https://github.com/zlpkhr/hasty-server).
+
+---
+
+## Project Status
+
+The project is under active development. Suggestions, bug reports, and pull requests are highly appreciated! 🎉
+
+---
+
+Let me know if further changes are needed!
