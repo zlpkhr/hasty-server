@@ -1,7 +1,3 @@
-Here’s the corrected README with the appropriate authorship and forking details:
-
----
-
 # Hasty Server
 
 **Hasty Server** is a blazing fast, lightweight HTTP server for Node.js, designed for developers who need performance and simplicity.
@@ -105,7 +101,3 @@ Feel free to reach out or contribute to the project on [GitHub](https://github.c
 ## Project Status
 
 The project is under active development. Suggestions, bug reports, and pull requests are highly appreciated! 🎉
-
----
-
-Let me know if further changes are needed!
