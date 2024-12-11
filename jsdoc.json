@@ -1,0 +1,18 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "include": ["./lib", "./server"],
+    "exclude": ["node_modules", "test"]
+  },
+  "opts": {
+    "destination": "./docs",
+    "recurse": true
+  },
+  "templates": {
+    "default": {
+      "includeDate": false
+    }
+  }
+}
