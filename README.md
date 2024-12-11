@@ -18,17 +18,20 @@ hasty-server/
 ## Building the Project
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/zlpkhr/hasty-server.git
    cd hasty-server
    ```
 
 2. Install dependencies for all workspaces:
+
    ```bash
    npm install
    ```
 
 3. Run TypeScript type checking:
+
    ```bash
    npm run lint
    ```
@@ -53,21 +56,25 @@ This will run all tests and show the coverage report.
 The documentation is built using Docusaurus. To work with the documentation:
 
 1. Start the development server:
+
    ```bash
    npm run -w doc start
    ```
 
 2. Build the documentation for production:
+
    ```bash
    npm run -w doc build
    ```
 
 3. Serve the built documentation:
+
    ```bash
    npm run -w doc serve
    ```
 
 4. Clear the build directory:
+
    ```bash
    npm run -w doc clear
    ```
