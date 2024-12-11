@@ -61,7 +61,7 @@ The project provides the following npm scripts:
 
 ## Documentation
 
-The documentation is built with [Docusaurus](https://docusaurus.io).
+The documentation is built with [JSDoc](https://jsdoc.app).
 
 ### Commands:
 
