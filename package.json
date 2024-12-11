@@ -12,7 +12,15 @@
   },
   "scripts": {
     "format": "prettier -w .",
-    "lint": "tsc --noEmit && eslint lint"
+    "lint": "tsc --noEmit && eslint lint",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*": [
+      "npm run lint",
+      "npm run format"
+    ]
   },
   "keywords": [
     "http",
@@ -48,6 +56,8 @@
     "@types/node": "^22.9.0",
     "eslint": "^9.16.0",
     "globals": "^15.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3"
   }
