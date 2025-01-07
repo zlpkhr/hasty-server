@@ -52,7 +52,7 @@ describe("Hasty Server Logging", () => {
     server.get("/test", mockCallback);
 
     server.listen(PORT, () => {
-      const client = require("net").connect(PORT, () => {
+      const client = require("net").connect(PORT.toString(), () => {
         client.write("GET /test HTTP/1.1\r\n\r\n");
       });
 
@@ -81,7 +81,7 @@ describe("Hasty Server Logging", () => {
     const PORT = 8082;
 
     server.listen(PORT, () => {
-      const client = require("net").connect(PORT, () => {
+      const client = require("net").connect(PORT.toString(), () => {
         client.write("GET /nonexistent HTTP/1.1\r\n\r\n");
       });
 

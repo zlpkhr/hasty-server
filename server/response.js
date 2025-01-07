@@ -8,7 +8,7 @@ const path = require("path");
 class Response {
   /**
    * Creates a new Response instance.
-   * @param {net.Socket} socket - The socket connection to the client.
+   * @param {import("net").Socket} socket - The socket connection to the client.
    * @param {boolean} enableCors - Whether to enable CORS headers for the response.
    */
   constructor(socket, enableCors) {
@@ -110,7 +110,7 @@ class Response {
       return this.json(data);
     }
 
-    this.setHeader("Content-Length", Buffer.byteLength(data));
+    this.setHeader("Content-Length", Buffer.byteLength(data).toString());
 
     const headers = `HTTP/1.1 ${this.statusCode} ${this.statusTextMap[this.statusCode]}\r\n${this.formatHeaders()}\r\n\r\n`;
     this.socket.write(headers + data);
@@ -138,7 +138,7 @@ class Response {
     }
     const body = JSON.stringify(data);
     this.setHeader("Content-Type", "application/json");
-    this.setHeader("Content-Length", Buffer.byteLength(body));
+    this.setHeader("Content-Length", Buffer.byteLength(body).toString());
 
     const headers = `HTTP/1.1 ${this.statusCode} ${this.statusTextMap[this.statusCode]}\r\n${this.formatHeaders()}\r\n\r\n`;
     this.socket.write(headers + body);
@@ -162,7 +162,7 @@ class Response {
         return;
       }
 
-      this.setHeader("Content-Length", stats.size);
+      this.setHeader("Content-Length", stats.size.toString());
 
       const headers = `HTTP/1.1 ${this.statusCode} ${this.statusTextMap[this.statusCode]}\r\n${this.formatHeaders()}\r\n\r\n`;
       this.socket.write(headers);
@@ -199,7 +199,7 @@ class Response {
         return;
       }
 
-      this.setHeader("Content-Length", stats.size);
+      this.setHeader("Content-Length", stats.size.toString());
 
       const headers = `HTTP/1.1 ${this.statusCode} ${this.statusTextMap[this.statusCode]}\r\n${this.formatHeaders()}\r\n\r\n`;
       this.socket.write(headers);

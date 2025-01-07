@@ -19,5 +19,5 @@
   },
   // Include the necessary files for your project
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-  "exclude": ["node_modules", "docs"]
+  "exclude": ["node_modules", "docs", "test"]
 }
