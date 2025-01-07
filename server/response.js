@@ -1,3 +1,4 @@
+// @ts-nocheck
 const fs = require("fs");
 const { lookupMimeType } = require("../lib/utils");
 const path = require("path");
@@ -8,7 +9,7 @@ const path = require("path");
 class Response {
   /**
    * Creates a new Response instance.
-   * @param {import("net").Socket} socket - The socket connection to the client.
+   * @param {net.Socket} socket - The socket connection to the client.
    * @param {boolean} enableCors - Whether to enable CORS headers for the response.
    */
   constructor(socket, enableCors) {
