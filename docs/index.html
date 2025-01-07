@@ -42,6 +42,82 @@
 
 
 
+    <section>
+        <article><h1>Hasty Server</h1>
+<p><strong>Hasty Server</strong> is a blazing fast, lightweight HTTP server for Node.js, designed for developers who need performance and simplicity.</p>
+<hr>
+<h2>Features</h2>
+<ul>
+<li>High-performance HTTP server</li>
+<li>Simple and intuitive API</li>
+<li>TypeScript and JavaScript support</li>
+<li>Built-in logging with <a href="https://github.com/pinojs/pino">Pino</a></li>
+<li>Easily extensible and configurable</li>
+</ul>
+<hr>
+<h2>Installation</h2>
+<p>Ensure you have the following prerequisites installed:</p>
+<ul>
+<li><strong>Node.js</strong>: &gt;= 20.0.0 (download from <a href="https://nodejs.org">nodejs.org</a>)</li>
+<li><strong>npm</strong>: Comes with Node.js</li>
+</ul>
+<p>Clone the repository and install dependencies:</p>
+<pre class="prettyprint source lang-bash"><code>git clone https://github.com/zlpkhr/hasty-server.git
+cd hasty-server
+npm install
+</code></pre>
+<hr>
+<h2>Usage</h2>
+<p>Here's how to get started with Hasty Server:</p>
+<pre class="prettyprint source lang-javascript"><code>const HastyServer = require(&quot;./server&quot;);
+const server = new HastyServer();
+
+server.listen(3000, () => {
+  console.log(&quot;Server is running on http://localhost:3000&quot;);
+});
+</code></pre>
+<hr>
+<h2>Scripts</h2>
+<p>The project provides the following npm scripts:</p>
+<ul>
+<li><strong>Lint</strong>: <code>npm run lint</code><br>
+Runs TypeScript type checking and linting.</li>
+<li><strong>Format</strong>: <code>npm run format</code><br>
+Formats the codebase with Prettier.</li>
+<li><strong>Test</strong>: <code>npm run -w test test</code><br>
+Runs the Jest test suite.</li>
+</ul>
+<hr>
+<h2>Documentation</h2>
+<p>The documentation is built with <a href="https://jsdoc.app">JSDoc</a>.</p>
+<h3>Commands:</h3>
+<ul>
+<li><strong>Start Dev Server</strong>: <code>npm run -w doc start</code></li>
+<li><strong>Build Documentation</strong>: <code>npm run -w doc build</code></li>
+<li><strong>Serve Documentation</strong>: <code>npm run -w doc serve</code></li>
+</ul>
+<p>Visit the live documentation site: <a href="https://hasty-server.vercel.app">Hasty Server Docs</a></p>
+<hr>
+<h2>Contributing</h2>
+<p>Contributions are welcome! To contribute:</p>
+<ol>
+<li>Fork the repository.</li>
+<li>Create a feature branch.</li>
+<li>Make your changes and ensure all tests pass.</li>
+<li>Submit a pull request.</li>
+</ol>
+<hr>
+<h2>License</h2>
+<p>This project is licensed under the <strong>MIT License</strong>. See the <a href="LICENSE.txt">LICENSE</a> file for details.</p>
+<hr>
+<h2>Author</h2>
+<p>Originally developed by <strong>Akshat Kotpalliwar</strong>, forked and maintained by <strong>Azamat Zulpykhar</strong>.</p>
+<p>Feel free to reach out or contribute to the project on <a href="https://github.com/zlpkhr/hasty-server">GitHub</a>.</p>
+<hr>
+<h2>Project Status</h2>
+<p>The project is under active development. Suggestions, bug reports, and pull requests are highly appreciated! 🎉</p></article>
+    </section>
+
 
 
 
@@ -50,7 +126,7 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Hasty.html">Hasty</a></li><li><a href="RadixTree.html">RadixTree</a></li><li><a href="RadixTreeNode.html">RadixTreeNode</a></li><li><a href="Response.html">Response</a></li><li><a href="Server.html">Server</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-tutorial.html">tutorial</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTTPbody">HTTPbody</a></li><li><a href="global.html#JSONbodyParser">JSONbodyParser</a></li><li><a href="global.html#cleanUpBody">cleanUpBody</a></li><li><a href="global.html#extractParams">extractParams</a></li><li><a href="global.html#findFirstBrac">findFirstBrac</a></li><li><a href="global.html#getSocket">getSocket</a></li><li><a href="global.html#handler">handler</a></li><li><a href="global.html#httpParser">httpParser</a></li><li><a href="global.html#lookupMimeType">lookupMimeType</a></li><li><a href="global.html#matchRouteWithParams">matchRouteWithParams</a></li><li><a href="global.html#mimeDb">mimeDb</a></li><li><a href="global.html#parseValue">parseValue</a></li><li><a href="global.html#pathController">pathController</a></li><li><a href="global.html#queryParser">queryParser</a></li><li><a href="global.html#queryStorePair">queryStorePair</a></li><li><a href="global.html#storePair">storePair</a></li><li><a href="global.html#storeQuery">storeQuery</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Hasty.html">Hasty</a></li><li><a href="RadixTree.html">RadixTree</a></li><li><a href="RadixTreeNode.html">RadixTreeNode</a></li><li><a href="Response.html">Response</a></li><li><a href="Server.html">Server</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-tutorial.html">tutorial</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTTPbody">HTTPbody</a></li><li><a href="global.html#JSONbodyParser">JSONbodyParser</a></li><li><a href="global.html#cleanUpBody">cleanUpBody</a></li><li><a href="global.html#extractParams">extractParams</a></li><li><a href="global.html#findFirstBrac">findFirstBrac</a></li><li><a href="global.html#getSocket">getSocket</a></li><li><a href="global.html#handler">handler</a></li><li><a href="global.html#httpParser">httpParser</a></li><li><a href="global.html#lookupMimeType">lookupMimeType</a></li><li><a href="global.html#matchRouteWithParams">matchRouteWithParams</a></li><li><a href="global.html#mimeDb">mimeDb</a></li><li><a href="global.html#parseValue">parseValue</a></li><li><a href="global.html#pathController">pathController</a></li><li><a href="global.html#queryParser">queryParser</a></li><li><a href="global.html#storePair">storePair</a></li></ul>
 </nav>
 
 <br class="clear">

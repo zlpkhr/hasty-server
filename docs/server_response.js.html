@@ -26,7 +26,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const fs = require("fs");
+            <pre class="prettyprint source linenums"><code>// @ts-nocheck
+const fs = require("fs");
 const { lookupMimeType } = require("../lib/utils");
 const path = require("path");
 
@@ -138,7 +139,7 @@ class Response {
       return this.json(data);
     }
 
-    this.setHeader("Content-Length", Buffer.byteLength(data));
+    this.setHeader("Content-Length", Buffer.byteLength(data).toString());
 
     const headers = `HTTP/1.1 ${this.statusCode} ${this.statusTextMap[this.statusCode]}\r\n${this.formatHeaders()}\r\n\r\n`;
     this.socket.write(headers + data);
@@ -166,7 +167,7 @@ class Response {
     }
     const body = JSON.stringify(data);
     this.setHeader("Content-Type", "application/json");
-    this.setHeader("Content-Length", Buffer.byteLength(body));
+    this.setHeader("Content-Length", Buffer.byteLength(body).toString());
 
     const headers = `HTTP/1.1 ${this.statusCode} ${this.statusTextMap[this.statusCode]}\r\n${this.formatHeaders()}\r\n\r\n`;
     this.socket.write(headers + body);
@@ -190,7 +191,7 @@ class Response {
         return;
       }
 
-      this.setHeader("Content-Length", stats.size);
+      this.setHeader("Content-Length", stats.size.toString());
 
       const headers = `HTTP/1.1 ${this.statusCode} ${this.statusTextMap[this.statusCode]}\r\n${this.formatHeaders()}\r\n\r\n`;
       this.socket.write(headers);
@@ -227,7 +228,7 @@ class Response {
         return;
       }
 
-      this.setHeader("Content-Length", stats.size);
+      this.setHeader("Content-Length", stats.size.toString());
 
       const headers = `HTTP/1.1 ${this.statusCode} ${this.statusTextMap[this.statusCode]}\r\n${this.formatHeaders()}\r\n\r\n`;
       this.socket.write(headers);
@@ -257,7 +258,7 @@ module.exports = Response;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Hasty.html">Hasty</a></li><li><a href="RadixTree.html">RadixTree</a></li><li><a href="RadixTreeNode.html">RadixTreeNode</a></li><li><a href="Response.html">Response</a></li><li><a href="Server.html">Server</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-tutorial.html">tutorial</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTTPbody">HTTPbody</a></li><li><a href="global.html#JSONbodyParser">JSONbodyParser</a></li><li><a href="global.html#cleanUpBody">cleanUpBody</a></li><li><a href="global.html#extractParams">extractParams</a></li><li><a href="global.html#findFirstBrac">findFirstBrac</a></li><li><a href="global.html#getSocket">getSocket</a></li><li><a href="global.html#handler">handler</a></li><li><a href="global.html#httpParser">httpParser</a></li><li><a href="global.html#lookupMimeType">lookupMimeType</a></li><li><a href="global.html#matchRouteWithParams">matchRouteWithParams</a></li><li><a href="global.html#mimeDb">mimeDb</a></li><li><a href="global.html#parseValue">parseValue</a></li><li><a href="global.html#pathController">pathController</a></li><li><a href="global.html#queryParser">queryParser</a></li><li><a href="global.html#queryStorePair">queryStorePair</a></li><li><a href="global.html#storePair">storePair</a></li><li><a href="global.html#storeQuery">storeQuery</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Hasty.html">Hasty</a></li><li><a href="RadixTree.html">RadixTree</a></li><li><a href="RadixTreeNode.html">RadixTreeNode</a></li><li><a href="Response.html">Response</a></li><li><a href="Server.html">Server</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-tutorial.html">tutorial</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTTPbody">HTTPbody</a></li><li><a href="global.html#JSONbodyParser">JSONbodyParser</a></li><li><a href="global.html#cleanUpBody">cleanUpBody</a></li><li><a href="global.html#extractParams">extractParams</a></li><li><a href="global.html#findFirstBrac">findFirstBrac</a></li><li><a href="global.html#getSocket">getSocket</a></li><li><a href="global.html#handler">handler</a></li><li><a href="global.html#httpParser">httpParser</a></li><li><a href="global.html#lookupMimeType">lookupMimeType</a></li><li><a href="global.html#matchRouteWithParams">matchRouteWithParams</a></li><li><a href="global.html#mimeDb">mimeDb</a></li><li><a href="global.html#parseValue">parseValue</a></li><li><a href="global.html#pathController">pathController</a></li><li><a href="global.html#queryParser">queryParser</a></li><li><a href="global.html#storePair">storePair</a></li></ul>
 </nav>
 
 <br class="clear">
