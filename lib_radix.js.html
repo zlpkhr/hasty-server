@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lib/radix.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lib/radix.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Represents a single node in a radix tree.
+ */
+class RadixTreeNode {
+  /**
+   * Constructs a new RadixTreeNode.
+   * @param {string} [value=""] - The value associated with this node.
+   */
+  constructor(value = "") {
+    this.value = value; // The string value of this node.
+    this.children = new Map(); // Map of child nodes (key: string, value: RadixTreeNode).
+    this.isEndOfWord = false; // Indicates whether this node marks the end of a word.
+  }
+}
+
+/**
+ * Implements a radix tree for efficient prefix-based string storage and lookup.
+ */
+class RadixTree {
+  /**
+   * Constructs a new RadixTree.
+   */
+  constructor() {
+    this.root = new RadixTreeNode(); // The root node of the radix tree.
+  }
+
+  /**
+   * Inserts a word into the radix tree.
+   * @param {string} word - The word to insert into the tree.
+   */
+  insert(word) {
+    let currentNode = this.root;
+    while (word.length > 0) {
+      let foundChild = false;
+
+      for (let [key, child] of currentNode.children) {
+        let commonPrefix = this._getCommonPrefix(word, key);
+
+        if (commonPrefix.length > 0) {
+          foundChild = true;
+
+          if (commonPrefix === key) {
+            currentNode = child;
+            word = word.slice(commonPrefix.length);
+          } else {
+            // Split the node
+            let remainingKey = key.slice(commonPrefix.length);
+            let remainingWord = word.slice(commonPrefix.length);
+
+            const newChild = new RadixTreeNode(remainingKey);
+            newChild.children = child.children;
+            newChild.isEndOfWord = child.isEndOfWord;
+
+            currentNode.children.delete(key);
+            currentNode.children.set(
+              commonPrefix,
+              new RadixTreeNode(commonPrefix),
+            );
+
+            const prefixNode = currentNode.children.get(commonPrefix);
+            prefixNode.children.set(remainingKey, newChild);
+            prefixNode.children.set(
+              remainingWord,
+              new RadixTreeNode(remainingWord),
+            );
+            prefixNode.children.get(remainingWord).isEndOfWord = true;
+
+            return;
+          }
+          break;
+        }
+      }
+
+      if (!foundChild) {
+        currentNode.children.set(word, new RadixTreeNode(word));
+        currentNode.children.get(word).isEndOfWord = true;
+        return;
+      }
+    }
+    currentNode.isEndOfWord = true;
+  }
+
+  /**
+   * Searches for a word in the radix tree.
+   * @param {string} word - The word to search for.
+   * @returns {boolean} True if the word exists in the tree, false otherwise.
+   */
+  search(word) {
+    let currentNode = this.root;
+    while (word.length > 0) {
+      let foundChild = false;
+
+      for (let [key, child] of currentNode.children) {
+        if (word.startsWith(key)) {
+          word = word.slice(key.length);
+          currentNode = child;
+          foundChild = true;
+          break;
+        }
+      }
+
+      if (!foundChild) return false;
+    }
+    return currentNode.isEndOfWord;
+  }
+
+  /**
+   * Deletes a word from the radix tree.
+   * @param {string} word - The word to delete.
+   */
+  delete(word) {
+    const deleteRecursively = (node, word) => {
+      if (word.length === 0) {
+        if (!node.isEndOfWord) return false;
+        node.isEndOfWord = false;
+        return node.children.size === 0;
+      }
+
+      for (let [key, child] of node.children) {
+        if (word.startsWith(key)) {
+          const shouldDeleteChild = deleteRecursively(
+            child,
+            word.slice(key.length),
+          );
+
+          if (shouldDeleteChild) {
+            node.children.delete(key);
+            return node.children.size === 0 &amp;&amp; !node.isEndOfWord;
+          }
+
+          return false;
+        }
+      }
+
+      return false;
+    };
+
+    deleteRecursively(this.root, word);
+  }
+
+  /**
+   * Finds the common prefix between two strings.
+   * @private
+   * @param {string} str1 - The first string.
+   * @param {string} str2 - The second string.
+   * @returns {string} The common prefix between the two strings.
+   */
+  _getCommonPrefix(str1, str2) {
+    let i = 0;
+    while (i &lt; str1.length &amp;&amp; i &lt; str2.length &amp;&amp; str1[i] === str2[i]) {
+      i++;
+    }
+    return str1.slice(0, i);
+  }
+
+  /**
+   * Matches a prefix in the radix tree and returns the corresponding node.
+   * @param {string} prefix - The prefix to match.
+   * @returns {RadixTreeNode|null} The node corresponding to the prefix, or null if not found.
+   */
+  matchPrefix(prefix) {
+    let currentNode = this.root;
+    while (prefix.length > 0) {
+      let foundChild = false;
+
+      for (let [key, child] of currentNode.children) {
+        if (prefix.startsWith(key)) {
+          prefix = prefix.slice(key.length);
+          currentNode = child;
+          foundChild = true;
+          break;
+        }
+      }
+
+      if (!foundChild) return null;
+    }
+    return currentNode;
+  }
+}
+
+module.exports = {
+  RadixTreeNode,
+  RadixTree,
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Hasty.html">Hasty</a></li><li><a href="RadixTree.html">RadixTree</a></li><li><a href="RadixTreeNode.html">RadixTreeNode</a></li><li><a href="Response.html">Response</a></li><li><a href="Server.html">Server</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-tutorial.html">tutorial</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTTPbody">HTTPbody</a></li><li><a href="global.html#JSONbodyParser">JSONbodyParser</a></li><li><a href="global.html#cleanUpBody">cleanUpBody</a></li><li><a href="global.html#extractParams">extractParams</a></li><li><a href="global.html#findFirstBrac">findFirstBrac</a></li><li><a href="global.html#getSocket">getSocket</a></li><li><a href="global.html#handler">handler</a></li><li><a href="global.html#httpParser">httpParser</a></li><li><a href="global.html#lookupMimeType">lookupMimeType</a></li><li><a href="global.html#matchRouteWithParams">matchRouteWithParams</a></li><li><a href="global.html#mimeDb">mimeDb</a></li><li><a href="global.html#parseValue">parseValue</a></li><li><a href="global.html#pathController">pathController</a></li><li><a href="global.html#queryParser">queryParser</a></li><li><a href="global.html#storePair">storePair</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

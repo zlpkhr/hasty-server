@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Tutorial: tutorial</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Tutorial: tutorial</h1>
+
+    <section>
+
+<header>
+    
+
+    <h2>tutorial</h2>
+</header>
+
+<article>
+    <h1>Build Your API with <code>hasty-server</code></h1>
+<p>This guide will walk you through setting up a simple API using <code>hasty-server</code>. It's straightforward, quick, and efficient—just the way it should be.</p>
+<hr>
+<h2>Step 1: Set Up Your Project</h2>
+<p>First, get your environment ready. Open a terminal, create a new project, and set up a basic Node.js app.</p>
+<pre class="prettyprint source lang-bash"><code>mkdir my-api
+cd my-api
+npm init -y
+</code></pre>
+<p>Next, install <code>hasty-server</code>:</p>
+<pre class="prettyprint source lang-bash"><code>npm install hasty-server
+</code></pre>
+<hr>
+<h2>Step 2: Create Your First Route</h2>
+<p>Now, let’s create your API. Open your editor and create a file called <code>server.js</code>. Start by setting up a basic server:</p>
+<pre class="prettyprint source lang-javascript"><code>const Hasty = require(&quot;hasty-server&quot;);
+
+const app = new Hasty();
+const PORT = 3000;
+
+app.get(&quot;/&quot;, (req, res) => {
+  res.json({ message: &quot;Welcome to hasty-server!&quot; });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
+</code></pre>
+<p>Run the server with:</p>
+<pre class="prettyprint source lang-bash"><code>node server.js
+</code></pre>
+<p>Open your browser or use a tool like Postman to hit <code>http://localhost:3000/</code>. You should see this:</p>
+<pre class="prettyprint source lang-json"><code>{ &quot;message&quot;: &quot;Welcome to hasty-server!&quot; }
+</code></pre>
+<hr>
+<h2>Step 3: Add Dynamic Routes</h2>
+<p>Want to fetch user data by ID? Let’s make a dynamic route:</p>
+<pre class="prettyprint source lang-javascript"><code>app.get(&quot;/user/:id&quot;, (req, res) => {
+  res.json({ userId: req.params.id });
+});
+</code></pre>
+<p>Now, restart your server and go to <code>http://localhost:3000/user/123</code>. You’ll get:</p>
+<pre class="prettyprint source lang-json"><code>{ &quot;userId&quot;: &quot;123&quot; }
+</code></pre>
+<p>Simple, right?</p>
+<hr>
+<h2>Step 4: Handle POST Requests</h2>
+<p>Need to handle incoming data? Add a POST route:</p>
+<pre class="prettyprint source lang-javascript"><code>app.post(&quot;/data&quot;, (req, res) => {
+  res.json({ received: req.body });
+});
+</code></pre>
+<p>Send a POST request to <code>http://localhost:3000/data</code> with JSON like this:</p>
+<pre class="prettyprint source lang-json"><code>{ &quot;name&quot;: &quot;John&quot; }
+</code></pre>
+<p>And the server will respond:</p>
+<pre class="prettyprint source lang-json"><code>{ &quot;received&quot;: { &quot;name&quot;: &quot;John&quot; } }
+</code></pre>
+<hr>
+<h2>Step 5: Enable CORS (Optional)</h2>
+<p>If you’re working with a frontend app, you might need to allow cross-origin requests. Just add this line at the top of your file:</p>
+<pre class="prettyprint source lang-javascript"><code>app.cors(true);
+</code></pre>
+<p>That’s it—CORS is now enabled.</p>
+<hr>
+<h2>Full Code Example</h2>
+<p>Here’s how your <code>server.js</code> might look now:</p>
+<pre class="prettyprint source lang-javascript"><code>const Hasty = require(&quot;hasty-server&quot;);
+
+const app = new Hasty();
+app.cors(true);
+
+app.get(&quot;/&quot;, (req, res) => {
+  res.json({ message: &quot;Welcome to hasty-server!&quot; });
+});
+
+app.get(&quot;/user/:id&quot;, (req, res) => {
+  res.json({ userId: req.params.id });
+});
+
+app.post(&quot;/data&quot;, (req, res) => {
+  res.json({ received: req.body });
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
+</code></pre>
+<hr>
+<h2>What’s Next?</h2>
+<p>You now have a basic API up and running. From here, you can:</p>
+<ul>
+<li>Add more routes (GET, POST, DELETE, etc.).</li>
+<li>Serve files with <code>res.sendFile(&quot;path/to/file&quot;)</code>.</li>
+<li>Implement middleware for custom request processing.</li>
+</ul>
+<p><code>hasty-server</code> is designed to be simple and powerful. Build what you need without unnecessary complexity.</p>
+</article>
+
+</section>
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Hasty.html">Hasty</a></li><li><a href="RadixTree.html">RadixTree</a></li><li><a href="RadixTreeNode.html">RadixTreeNode</a></li><li><a href="Response.html">Response</a></li><li><a href="Server.html">Server</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-tutorial.html">tutorial</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTTPbody">HTTPbody</a></li><li><a href="global.html#JSONbodyParser">JSONbodyParser</a></li><li><a href="global.html#cleanUpBody">cleanUpBody</a></li><li><a href="global.html#extractParams">extractParams</a></li><li><a href="global.html#findFirstBrac">findFirstBrac</a></li><li><a href="global.html#getSocket">getSocket</a></li><li><a href="global.html#handler">handler</a></li><li><a href="global.html#httpParser">httpParser</a></li><li><a href="global.html#lookupMimeType">lookupMimeType</a></li><li><a href="global.html#matchRouteWithParams">matchRouteWithParams</a></li><li><a href="global.html#mimeDb">mimeDb</a></li><li><a href="global.html#parseValue">parseValue</a></li><li><a href="global.html#pathController">pathController</a></li><li><a href="global.html#queryParser">queryParser</a></li><li><a href="global.html#storePair">storePair</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

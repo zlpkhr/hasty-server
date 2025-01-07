@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lib/parser.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lib/parser.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const request = require("../test/test.js");
+const net = require("net");
+
+/**
+ * Finds the first occurrence of a specific character in a string.
+ * @param {string} req - The string to search.
+ * @param {string} target - The character to find.
+ * @returns {number} The position of the target character, or -1 if not found.
+ */
+function findFirstBrac(req, target) {
+  for (let i = 0; i &lt; req.length; i++) {
+    if (req[i] === target) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+/**
+ * Parses an HTTP request string into a structured object.
+ * @async
+ * @param {string} request - The raw HTTP request string.
+ * @returns {Promise&lt;Object>} A parsed HTTP request object containing method, path, version, and optionally a body.
+ */
+async function httpParser(request) {
+  const req = {};
+  const requestString = request.split("\n");
+  const pos = findFirstBrac(requestString, "{");
+  const requestWoBody = requestString.slice(0, pos);
+
+  req.method = requestWoBody[0].split(" ")[0];
+  req.path = requestString[0].split(" ")[1];
+  req.version = requestString[0].split(" ")[2];
+
+  if (req.method === "GET") {
+    return req;
+  }
+
+  await HTTPbody(requestString, pos).then((data) => {
+    req.body = JSONbodyParser(data);
+  });
+
+  return req;
+}
+
+/**
+ * Parses a JSON-like body string into a JavaScript object.
+ * @param {string} body - The body string to parse.
+ * @returns {Object} Parsed JSON object.
+ */
+function JSONbodyParser(body) {
+  const req = body.split("");
+  const httpJSON = {};
+  let flag = 0;
+
+  while (req.length !== 0) {
+    if (req[0] === "{") {
+      flag++;
+      req.shift();
+    } else if (req[0] === "}") {
+      flag--;
+      req.shift();
+    } else {
+      storePair(req, httpJSON);
+    }
+  }
+
+  return httpJSON;
+}
+
+/**
+ * Parses the body of an HTTP request starting from a given position.
+ * @param {string[]} req - The request string array.
+ * @param {number} pos - The starting position of the body.
+ * @returns {Promise&lt;string>} The parsed body as a string.
+ */
+function HTTPbody(req, pos) {
+  let flag = 0;
+  let body = "";
+
+  return new Promise((resolve) => {
+    for (let i = pos; i &lt; req.length; i++) {
+      if (req[i] === "{") {
+        flag++;
+        body += req[i];
+      } else if (req[i] === "}") {
+        flag--;
+        body += req[i];
+      }
+      body += req[i];
+    }
+
+    resolve(body.replace(/\s+/g, "").replace(/"/g, ""));
+  });
+}
+
+/**
+ * Stores key-value pairs from a request string into a JSON object.
+ * @param {string[]} req - The request string array.
+ * @param {Object} httpJSON - The JSON object to store the key-value pairs.
+ * @returns {string[]} The remaining request string array after parsing.
+ */
+function storePair(req, httpJSON) {
+  let key = "";
+  while (req[0] !== ":") {
+    key += req.shift();
+  }
+  req.shift();
+
+  let value = "";
+  while (req[0] !== "," &amp;&amp; req[0] !== null) {
+    value += req.shift();
+  }
+  req.shift();
+
+  httpJSON[key] = value;
+  return req;
+}
+
+/**
+ * Parses a query string from a URL.
+ * @param {string} request - The full URL containing the query string.
+ * @returns {Object} Parsed query parameters as key-value pairs.
+ */
+function queryParser(request) {
+  const pos = findFirstBrac(request, "?");
+  const query = request.slice(pos + 1);
+  return storeQuery(query);
+}
+
+/**
+ * Parses a query string into a JSON object.
+ * @param {string} query - The query string to parse.
+ * @returns {Object} Parsed query parameters as a JSON object.
+ */
+function storeQuery(query) {
+  const req = query.split("");
+  const httpQueryJSON = {};
+
+  while (req.length !== 0) {
+    queryStorePair(req, httpQueryJSON);
+  }
+
+  return httpQueryJSON;
+}
+
+/**
+ * Parses and stores a single key-value pair from a query string.
+ * @param {string[]} req - The query string array.
+ * @param {Object} httpQueryJSON - The JSON object to store the key-value pair.
+ * @returns {Object} The updated JSON object with the new key-value pair.
+ */
+function queryStorePair(req, httpQueryJSON) {
+  let key = "";
+  while (req[0] !== "=") {
+    key += req.shift();
+  }
+  req.shift();
+
+  let value = "";
+  while (req[0] !== "&amp;" &amp;&amp; req[0] !== undefined) {
+    value += req.shift();
+  }
+  if (req[0] === "&amp;") req.shift();
+
+  httpQueryJSON[key] = value;
+  return httpQueryJSON;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Hasty.html">Hasty</a></li><li><a href="RadixTree.html">RadixTree</a></li><li><a href="RadixTreeNode.html">RadixTreeNode</a></li><li><a href="Response.html">Response</a></li><li><a href="Server.html">Server</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-tutorial.html">tutorial</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTTPbody">HTTPbody</a></li><li><a href="global.html#JSONbodyParser">JSONbodyParser</a></li><li><a href="global.html#cleanUpBody">cleanUpBody</a></li><li><a href="global.html#extractParams">extractParams</a></li><li><a href="global.html#findFirstBrac">findFirstBrac</a></li><li><a href="global.html#getSocket">getSocket</a></li><li><a href="global.html#handler">handler</a></li><li><a href="global.html#httpParser">httpParser</a></li><li><a href="global.html#lookupMimeType">lookupMimeType</a></li><li><a href="global.html#matchRouteWithParams">matchRouteWithParams</a></li><li><a href="global.html#mimeDb">mimeDb</a></li><li><a href="global.html#parseValue">parseValue</a></li><li><a href="global.html#pathController">pathController</a></li><li><a href="global.html#queryParser">queryParser</a></li><li><a href="global.html#queryStorePair">queryStorePair</a></li><li><a href="global.html#storePair">storePair</a></li><li><a href="global.html#storeQuery">storeQuery</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
